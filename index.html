@@ -8,46 +8,67 @@
 
     <!-- Added link to the jQuery Library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./script.js"></script>
 </head>
 
 <body>
+
     <main>
+
+        <!-- title and timer box -->
+        <header id="header">
+
+            <h1>Quiz Time! <span id="masterClock"></span></h1>
+        
+        </header>
+
+        <!-- start and stop buttons -->
         <article>
 
-            <button id="start-button"></button>
-            <button id="stop-button"></button>
+            <button id="start-button">Start</button>
+            <button id="stop-button">Give up</button>
         
         </article> 
-
-        <header id="header">
-            <h1>Quiz Time! <span id="masterClock"></span></h1>
-        </header>
         
+        <!-- question box that changes with clicks -->
         <article id="question-box">
+
             <h2 id="question"></h2>
             <button id="a-button"></button>
             <button id="b-button"></button>
             <button id="c-button"></button>
             <button id="d-button"></button>
+
         </article>
 
-  
-
+        <!-- legends showing current status -->
         <footer>
+
             <fieldset id="questions-remaining">
+                
                 <legend>Questions Remaining</legend>
                 <div></div>
+
             </fieldset>
 
             <fieldset id="questions-correct">
+               
                 <legend>Questions Correct</legend>
                 <div></div>
+
             </fieldset>
 
             <fieldset id="alternative-facts">
+               
                 <legend>Alternative Facts</legend>
                 <div></div>
+
             </fieldset>
+
+            <fieldset id="high-score">
+
+            </fieldset>
+        
         </footer>
 
     </main>
@@ -55,3 +76,4 @@
 </body>
 
 </html>
+  
