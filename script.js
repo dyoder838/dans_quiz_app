@@ -77,57 +77,22 @@ function startMasterClock(){
 // when timer starts counting the multiple choice field appears
             // function that populates the dom object mainBox, makes the questions change
 // --------- questions and answers -----------
-function startQuiz(){
+// how to construct the array
  
-
-var json = {
-    title: "American History",
-    startSurveyText: "Start Quiz",
-    pages: [
-        {
-            questions: [
-                {
-                    type: "radiogroup",
-                    name: "civilwar",
-                    title: "When was the Civil War?",
-                    choices: [
-                        "1750-1800", "1800-1850", "1850-1900", "1900-1950", "after 1950"
-                    ],
-                    correctAnswer: "1850-1900"
-                }
-            ]
-        }, {
-            questions: [
-                {
-                    type: "radiogroup",
-                    name: "libertyordeath",
-                    title: "Who said 'Give me liberty or give me death?'",
-                    choicesOrder: "random",
-                    choices: [
-                        "John Hancock", "James Madison", "Patrick Henry", "Samuel Adams"
-                    ],
-                    correctAnswer: "Patrick Henry"
-                }
-            ]
-        }, {
-            questions: [
-                {
-                    type: "radiogroup",
-                    name: "magnacarta",
-                    title: "What is the Magna Carta?",
-                    choicesOrder: "random",
-                    choices: [
-                        "The foundation of the British parliamentary system", "The Great Seal of the monarchs of England", "The French Declaration of the Rights of Man", "The charter signed by the Pilgrims on the Mayflower"
-                    ],
-                    correctAnswer: "The foundation of the British parliamentary system"
-                }
-            ]
-        }
-    ],
-    
+var myArr = [
+     {
+         question: "which option shows a correctly written function in javascript"
+         answers:["f of x", "=> {}", "function myFunction(){}", "ahhhhhhh!!!"]
+         correctAnswer:"function myFunction(){}"
+     }, 
+ ]
+ 
+ // my array, question (object) indexed at 0, and of that, answers indexed, call them with 0- whatever 
+ // use these as links to the main viewer - try to make a template with a variable that progresses
+ //through the array with a for loop
+ console.log(myArr[0].answers[1])
 
 
-};
 
 
        
