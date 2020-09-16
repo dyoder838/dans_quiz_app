@@ -7,8 +7,7 @@
     <title>Trigger Random</title>
 
     <!-- Added link to the jQuery Library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="./script.js"></script>
+    
 </head>
 
 <body>
@@ -18,7 +17,7 @@
         <!-- title and timer box -->
         <header id="header">
 
-            <h1>Quiz Time! <span id="master-clock"></span></h1>
+            <h1>Quiz Time! <span id="master-clock-minutes"></span><span id="master-clock-seconds"> </span></h1>
         
         </header>
 
@@ -31,7 +30,7 @@
         </article> 
         
         <!-- question box that changes with clicks -->
-        <article id="variable-box">
+        <article  id="variable-box">
 
             <h2 id="question"></h2>
             <button id="a-button"></button>
@@ -69,7 +68,8 @@
         </footer>
 
     </main>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

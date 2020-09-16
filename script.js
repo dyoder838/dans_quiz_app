@@ -8,9 +8,16 @@ const bButton = $("#b-button")
 const cButton = $("#c-button")
 const dButton = $("#d-button")
 
-//------------- clock ------------
-const masterClock = $("#master-clock")
+//------------- master clock ------------
+const minutes = $("#master-clock-minutes")
+const seconds = $("#master-clock-seconds")
+var totalSeconds = 60;
+var secondsElapsed = 0;
+var quizInterval; 
 
+// ----------- start delay clock --------
+var secondsLeft = 5;
+var timeInterval;
 // ----------- main window --------
 const mainBox = $("#variable-box")
 
@@ -25,8 +32,69 @@ const altFacts = $("#alternative-facts")
 // GIVEN I am taking a code quiz
 // WHEN I click the start button ,THEN a timer starts and I am presented with a question
 //TODO: build a button that starts a timer to begin
+//FIXME: only one button press allowed
+// ------------ start button -------------
+$(startButton).on("click", function(){
+    // 5 second count down w text in question
+    startDelayClock();
+    console.log("button working?:" , startButton)
+});
+
+// ------ start button triggers delay start count down ----------
+function startDelayClock(){
+    
+    var timerInterval = setInterval(function() {
+    
+        question.text("Begin quiz in "  + secondsLeft);
+        secondsLeft--;
+        console.log("does startDelayClock work:" , secondsLeft)
+        if(secondsLeft === 0) {
+            clearInterval(timerInterval);
+            question.empty()
+            startMasterClock();
+        }
+        
+    }, 1000);
+    
+};
+
+// ------------ delay start countdown triggers the master clock, and the quiz ------- 
+function startMasterClock(){
+   
+    var quizInterval = setInterval(function() {
+    
+        seconds.text(totalSeconds); 
+        totalSeconds--;
+        console.log("does master clock work:" , totalSeconds)
+        if(totalSeconds === 0) {
+            clearInterval(quizInterval);
+        }
+           
+    }, 1000);
+       
+
+};
+// var timeEl = document.querySelector(".time");
+// var mainEl = document.getElementById("main");
+
+// 
+
+//
+
+// function sendMessage() {
+//   timeEl.textContent = " ";
+
+//   var imgEl = document.createElement("img");
+
+//   imgEl.setAttribute("src", "images/image_1.jpg");
+//   mainEl.appendChild(imgEl);
+
+// }
+
+
         // after that timer counts down from five - the main clock begins
             //build a main clock
+
         // when timer starts counting the multiple choice field appears
             // function that populates the dom object, makes the questions change
 
