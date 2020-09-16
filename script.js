@@ -78,24 +78,37 @@ function startMasterClock(){
             // function that populates the dom object mainBox, makes the questions change
 // --------- questions and answers -----------
 // how to construct the array
+ //// create an external index that can cycle the questions i++ 
+
  
 var myArr = [
+    {
+        "question": "Who is Cloud?",
+        "answers": ["Main character", "Main bad guy", "Supporting character", "Evaporated water"],
+        "correctAnswer": "Main character"
+    }, 
      {
-         question: "which option shows a correctly written function in javascript"
-         answers:["f of x", "=> {}", "function myFunction(){}", "ahhhhhhh!!!"]
-         correctAnswer:"function myFunction(){}"
-     }, 
- ]
+        "question": "What is Materia used for?",
+        "answers": ["Materia gives you special abilities", "Materia makes characters explode", "Materia are in game currency", "Materia is useless"],
+        "correctAnswer": "Materia gives you special abilities"
+    }, 
+    {
+        "question": "Who is Sephiroth",
+        "answers": ["Cloud's brother", "A shopkeeper from the first act", "The main bad guy", "The creator of the game"],
+        "correctAnswer": "The main bad guy"
+    }, 
+    {
+        "question": "in the original release of the game on the PlayStation, how many disks did the came use? ",
+        "answers": ["1", "2", "3", "4"],
+        "correctAnswer": "3"
+    }
+];
  
  // my array, question (object) indexed at 0, and of that, answers indexed, call them with 0- whatever 
  // use these as links to the main viewer - try to make a template with a variable that progresses
  //through the array with a for loop
  console.log(myArr[0].answers[1])
 
-
-
-
-       
 
         
 // TODO: build the multiple choice fields
@@ -107,6 +120,7 @@ var myArr = [
 // WHEN all questions are answered or the timer reaches, THEN the game is over
     // create an if, (clock.value = 0), if(quiz.length = 10) then launch score menu
 
+   
 
 // WHEN the game is over, THEN I can save my initials and score
     //in question box create an input field that records user initials and score 
@@ -168,3 +182,7 @@ var myArr = [
             // this fancy code is short hand appending. backticks and ${} mean append
             lsOutput.innerHTML += `${key}: ${value}<br />`;
         };*/ 
+
+
+        //<----- sources ------->
+        // https://uwseafsfft082-37y7395.slack.com/files/U018Z276WQG/F01B0RV2VSQ/localstorage_example
