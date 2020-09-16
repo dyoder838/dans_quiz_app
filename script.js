@@ -52,12 +52,13 @@ function startDelayClock(){
             clearInterval(timerInterval);
             question.empty()
             startMasterClock();
+            startQuiz()
         }
-        
     }, 1000);
-    
 };
-
+ 
+// after that timer counts down from five - the main clock begins
+            //build a main clock
 // ------------ delay start countdown triggers the master clock, and the quiz ------- 
 function startMasterClock(){
    
@@ -68,36 +69,70 @@ function startMasterClock(){
         console.log("does master clock work:" , totalSeconds)
         if(totalSeconds === 0) {
             clearInterval(quizInterval);
+            
         }
-           
     }, 1000);
-       
+};
+
+// when timer starts counting the multiple choice field appears
+            // function that populates the dom object mainBox, makes the questions change
+// --------- questions and answers -----------
+function startQuiz(){
+ 
+
+var json = {
+    title: "American History",
+    startSurveyText: "Start Quiz",
+    pages: [
+        {
+            questions: [
+                {
+                    type: "radiogroup",
+                    name: "civilwar",
+                    title: "When was the Civil War?",
+                    choices: [
+                        "1750-1800", "1800-1850", "1850-1900", "1900-1950", "after 1950"
+                    ],
+                    correctAnswer: "1850-1900"
+                }
+            ]
+        }, {
+            questions: [
+                {
+                    type: "radiogroup",
+                    name: "libertyordeath",
+                    title: "Who said 'Give me liberty or give me death?'",
+                    choicesOrder: "random",
+                    choices: [
+                        "John Hancock", "James Madison", "Patrick Henry", "Samuel Adams"
+                    ],
+                    correctAnswer: "Patrick Henry"
+                }
+            ]
+        }, {
+            questions: [
+                {
+                    type: "radiogroup",
+                    name: "magnacarta",
+                    title: "What is the Magna Carta?",
+                    choicesOrder: "random",
+                    choices: [
+                        "The foundation of the British parliamentary system", "The Great Seal of the monarchs of England", "The French Declaration of the Rights of Man", "The charter signed by the Pilgrims on the Mayflower"
+                    ],
+                    correctAnswer: "The foundation of the British parliamentary system"
+                }
+            ]
+        }
+    ],
+    
+
 
 };
-// var timeEl = document.querySelector(".time");
-// var mainEl = document.getElementById("main");
-
-// 
-
-//
-
-// function sendMessage() {
-//   timeEl.textContent = " ";
-
-//   var imgEl = document.createElement("img");
-
-//   imgEl.setAttribute("src", "images/image_1.jpg");
-//   mainEl.appendChild(imgEl);
-
-// }
 
 
-        // after that timer counts down from five - the main clock begins
-            //build a main clock
+       
 
-        // when timer starts counting the multiple choice field appears
-            // function that populates the dom object, makes the questions change
-
+        
 // TODO: build the multiple choice fields
     //we need to construct arrays that pertain to the dom ids #question-box and a-d buttons
         // there needs to be a && if function to determine the correct answer. 
