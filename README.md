@@ -34,7 +34,7 @@ One can see the app in action here:
 https://dyoder838.github.io/dans_quiz_app/.
 
 A screenshot at time of submission:
-![Quiz Time!](assets\images\quizTime.JPG)
+![Quiz Time!](assets\images\quizTime.png)
 
 
 
