@@ -30,9 +30,9 @@ const altFacts = $("#alternative-facts")
 
 var currentQuestion = 0;
 
-var correctAnswers = 1;
+var correctAnswers = 0;
 
-var alternateFacts = 1;
+var alternateFacts = 0;
 
 var quizOver = false;
 
@@ -40,22 +40,22 @@ var questionArr = [
     {
         "question": "Who is Cloud?",
         "answers": ["Main character", "Main bad guy", "Supporting character", "Evaporated water"],
-        "correctAnswer": 0
+        "correctAnswer": "0"
     }, 
      {
         "question": "What is Materia used for?",
         "answers": ["Materia gives you special abilities", "Materia makes characters explode", "Materia are in game currency", "Materia is useless"],
-        "correctAnswer": 0
+        "correctAnswer": "0"
     }, 
     {
         "question": "Who is Sephiroth",
         "answers": ["Cloud's brother", "A shopkeeper from the first act", "The main bad guy", "The creator of the game"],
-        "correctAnswer": 2
+        "correctAnswer":"2"
     }, 
     {
         "question": "in the original release of the game on the PlayStation, how many disks did the came use? ",
         "answers": ["1", "2", "3", "4"],
-        "correctAnswer": 2
+        "correctAnswer": "2"
     }
 ];
 
@@ -71,7 +71,7 @@ $(startButton).on("click", function(){
   
 });
 
-// ------ start button triggers delay start count down ----------
+// ------ start button triggers delay start count down and start quiz----------
 function startDelayClock(){
    
     var timerInterval = setInterval(function() {
@@ -79,9 +79,10 @@ function startDelayClock(){
         questionBox.text("Begin quiz in "  + secondsLeft);
         secondsLeft--;
         console.log("does startDelayClock work:" , secondsLeft)
-        if(secondsLeft === 0) {
+        if(secondsLeft === 0 ) {
             clearInterval(timerInterval);
             questionBox.empty()
+            
             startMasterClock();
             startQuiz()
         }
@@ -100,7 +101,7 @@ function startMasterClock(){
         seconds.text(totalSeconds); 
         totalSeconds--;
         console.log("does master clock work:" , totalSeconds)
-        if(totalSeconds === 0) {
+        if(totalSeconds === 0 || (currentQuestion === questionArr.length)) {
             clearInterval(quizInterval);
             
         }
@@ -163,12 +164,12 @@ function startQuiz() {
     //const nextButton = $("#next-button")
 
     $(nextButton).on("click", function () {
-        $(altFacts).text(alternateFacts)
-        $(qCorrect).text(correctAnswers)
+        // $(altFacts).text(alternateFacts)
+        // $(qCorrect).text(correctAnswers)
         if (!quizOver) {
 
             value = $("input[type='radio']:checked").val();
-
+            console.log(typeof value)
             if (value == undefined) {
                 $(quizMessage).text("You didn't pick anything!!");
                 $(quizMessage).show();
@@ -176,19 +177,24 @@ function startQuiz() {
                 
                 $(quizMessage).hide();
 
-                if (value == questionArr[currentQuestion].correctAnswer) {
+                if (value === questionArr[currentQuestion].correctAnswer) {
                     correctAnswers++;
+                   
+                    $(qCorrect).text(correctAnswers)
                     console.log("do correct answers increase:" , correctAnswers)
                 } else {
                     alternateFacts++;
+                    $(altFacts).text(alternateFacts)
                 }
 
                 
                 // Since we have already displayed the first question on DOM ready
-                // currentQuestion++;
+                currentQuestion++;
                 if (currentQuestion < questionArr.length) {
                     startQuiz();
                 } else {
+
+                
                     displayScore();
                     // $(document).find(".nextButton").toggle();
                     // $(document).find(".playAgainButton").toggle();
