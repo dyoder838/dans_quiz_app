@@ -15,6 +15,7 @@ var quizInterval;
 // ----------- start delay clock --------
 var secondsLeft = 5;
 var timeInterval;
+
 // ----------- main window --------
 const mainBox = $("#variable-box")
 const quizMessage = $("#quiz-message")
@@ -28,6 +29,11 @@ const qRemain = $("#questions-remaining")
 const qCorrect = $("#questions-correct")
 const altFacts = $("#alternative-facts")
 
+// -------------- score array ------------
+var recordScores = {
+    name:[],
+    score:[]
+};
 var currentQuestion = 0;
 
 var correctAnswers = 0;
@@ -61,13 +67,15 @@ var questionArr = [
 
 // GIVEN I am taking a code quiz
 // WHEN I click the start button ,THEN a timer starts and I am presented with a question
-//TODO: build a button that starts a timer to begin
-//FIXME: only one button press allowed
+
+
 // ------------ start button -------------
 $(startButton).on("click", function(){
     // 5 second count down w text in question
     startDelayClock();
     console.log("button working?:" , startButton)
+    // makes it so it cant be pressed again
+    startButton.hide()
   
 });
 
@@ -101,6 +109,7 @@ function startMasterClock(){
         seconds.text(totalSeconds); 
         totalSeconds--;
         console.log("does master clock work:" , totalSeconds)
+        
         if(totalSeconds === 0 || (currentQuestion === questionArr.length)) {
             clearInterval(quizInterval);
             
@@ -108,25 +117,9 @@ function startMasterClock(){
     }, 1000);
 };
 
-// when timer starts counting the multiple choice field appears
-            // function that populates the dom object mainBox, makes the questions change
-
-// TODO: build the multiple choice fields
-            
-                        // --------- questions and answers -----------
- 
-
-
-
-// variables to store question values
-
-
+// make a for loop to cycle through the array and pull out the information we need, and display them:
 // this function runs along side the clock, and is the start of the quiz
 function startQuiz() {
-
-// make a for loop to cycle through the array and pull out the information we need, and display them:
-    //1 the current question, 2 the answers the user can select, 3 the correct answer
-            //note, as these all belong to the same object, current question is inherently associated with answers
 
     // --- remember dom references --> 
     //const questionBox = $("#question-box")
@@ -160,78 +153,99 @@ function startQuiz() {
 };
 
 //push the next button to do it again
- 
-    //const nextButton = $("#next-button")
-
     $(nextButton).on("click", function () {
-        // $(altFacts).text(alternateFacts)
-        // $(qCorrect).text(correctAnswers)
+        // Set the end game parameter - quizOver = false is declared in the top lines
+        // If the quiz is not over - do the following
         if (!quizOver) {
 
+            // If you didn't pick an answer, you get a message when you click next.
             value = $("input[type='radio']:checked").val();
             console.log(typeof value)
             if (value == undefined) {
                 $(quizMessage).text("You didn't pick anything!!");
                 $(quizMessage).show();
+            
+            // If you did click an answer.
             } else {
                 
                 $(quizMessage).hide();
-
+                // Answer is correct if it matches the correct answer in the array
                 if (value === questionArr[currentQuestion].correctAnswer) {
+                    
+                    // Adds a point to correct answer column
                     correctAnswers++;
                    
-                    $(qCorrect).text(correctAnswers)
-                    console.log("do correct answers increase:" , correctAnswers)
+                    $(qCorrect).text(correctAnswers);
+                    
+                // Answer is incorrect
                 } else {
+                    // Adds a point to the incorrect column
                     alternateFacts++;
-                    $(altFacts).text(alternateFacts)
-                }
+                    $(altFacts).text(alternateFacts);
+                    penaltyFunction();
 
-                
-                // Since we have already displayed the first question on DOM ready
+                };
+
+                // Progress the current question count.
                 currentQuestion++;
+
+                // If player has not answered all of the questions, the quiz progresses, if not, the game ends
                 if (currentQuestion < questionArr.length) {
                     startQuiz();
+                
                 } else {
 
-                
-                    displayScore();
-                    // $(document).find(".nextButton").toggle();
-                    // $(document).find(".playAgainButton").toggle();
-                    // Change the text in the next button to ask if user wants to play again
-                    $(nextButton).text("Play Again?");
-                    quizOver = true;
-                }
-            }
-        } else { // quiz is over and clicked the next button (which now displays 'Play Again?'
+                 displayScore();
+
+                // Change the text in the next button to ask if user wants to play again
+                $(nextButton).text("Play Again?");
+                quizOver = true;
+                };
+
+            };
+
+        // If the quiz is over, reset the game 
+        } else { 
             quizOver = false;
             $(nextButton).text("Next Question");
             resetQuiz();
             startQuiz();
             hideScore();
-        }
-    });
+            startButton.show()
+        };
 
-    // $(stopButton).on("click", function(){
-    //     resetQuiz(),
-    //     console.log(this)
-    //     return;
-    // });
+    });
 
     function resetQuiz() {
         currentQuestion = 0;
         correctAnswers = 0;
+        alternateFacts = 0;
     
     };
-    
+
+    // takes 5 seconds off the clock when you answer with alternativeFacts
+    function penaltyFunction(){ 
+        totalSeconds -= 5
+    }
+   
+
     function displayScore() {
+        var scoreTime = (60 - $(seconds).text())
+        var calculatedScore = Math.floor((correctAnswers / scoreTime) * 10000)
         questionBox.empty()
         choiceList.empty()
-        questionBox.text("You scored: " + correctAnswers + " out of: " + questionArr.length);
-        
-        
+        questionBox.text("You correctly answered: " + correctAnswers + " out of: " + questionArr.length + " questions, and scored " + calculatedScore + " points! ");
+        highscore()
     };
-    
+
+    function highScore(){
+        questionBox.empty()
+        choiceList.empty()
+        questionBox.text("You correctly answered: " + correctAnswers + " out of: " + questionArr.length + " questions, and scored " + calculatedScore + " points! ");
+        
+        $('<li><input type="submit text" ></li>').appendTo(choiceList);
+
+    }
     // function hideScore() {
     //     $(document).find(".result").hide();
     // };     
