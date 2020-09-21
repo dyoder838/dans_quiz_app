@@ -1,9 +1,11 @@
 body{
     background-color: rgb(83, 83, 83);
     background-repeat: no-repeat;
-    background-position: -150px 0;
+    
+    background-image: url("assets/images/ffviir-zoom-midgar-city.jpg");
+    background-size: 100%
   }
-  .ff7{
+  .ff7, li {
     border: solid 1px #424542;
     box-shadow: 1px 1px #e7dfe7,
                 -1px -1px #e7dfe7,
@@ -12,9 +14,9 @@ body{
                 0 -2px #9c9a9c,
                 -2px 0 #7b757b,
                 0 2px #424542;
-    width: 100%;
+    width: 50%;
     padding: 5px 10px 5px 10px;
-    margin: auto;
+    margin: 10px 0px 0px 10px;
     height: 50px;
     position: relative; 
     
@@ -32,7 +34,7 @@ body{
     -moz-border-radius: 7px;
     border-radius: 7px;
   }
-  .ff7 *{
+  ul, .ff7 {
     color: #eff1ff;
     text-shadow: 2px 2px #212421,
                  1px 1px #212021;
