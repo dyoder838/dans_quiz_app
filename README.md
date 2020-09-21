@@ -21,11 +21,6 @@ local storage
 intervals
 if else statements 
 
-At the time of this writing, the project has yet to be completed. 
-    - Scoring is incomplete
-    - localStorage is incomplete
-    - CSS is incomplete
-    - Endgame is incomplete
 
 One can follow my progress using my github repository:
 https://github.com/dyoder838/dans_quiz_app.git
@@ -34,7 +29,7 @@ One can see the app in action here:
 https://dyoder838.github.io/dans_quiz_app/.
 
 A screenshot at time of submission:
-![Quiz Time!](/assets/images/quizTime.png)
+![Quiz Time!](assets/images/quiztime-update.PNG)
 
 
 
