@@ -2,11 +2,13 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Quiz Time! Final Fantasy VII Edition</title>
 
     <!-- Added link to the jQuery Library -->
+    <link rel="stylesheet" href="style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
@@ -42,24 +44,30 @@
         <!-- legends showing current status -->
         <footer>
 
-            <fieldset id="questions-remaining-field">
+            <fieldset class="ff7" id="questions-remaining-field">
                 
                 <legend>Questions Remaining</legend>
                 <div id="questions-remaining"></div>
 
             </fieldset>
 
-            <fieldset id="questions-correct-field">
+            <fieldset class="ff7" id="questions-correct-field">
                
                 <legend>Questions Correct</legend>
                 <div id="questions-correct"></div>
 
             </fieldset>
 
-            <fieldset id="alternative-facts-field">
+            <fieldset class="ff7" id="alternative-facts-field">
                
                 <legend>Alternative Facts</legend>
                 <div id="alternative-facts"></div>
+
+            </fieldset>
+            <fieldset class="ff7" id="high-scores-field">
+               
+                <legend>High Scores</legend>
+                <div id="high-scores"></div>
 
             </fieldset>
 

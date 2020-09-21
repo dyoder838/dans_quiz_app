@@ -3,7 +3,7 @@
 // ------------- buttons ------------------
 const startButton = $("#start-button")
 const stopButton = $("#stop-button")
-const nextButton = $("#next-button")
+var nextButton = $("#next-button")
 nextButton.hide()
 //------------- master clock ------------
 const minutes = $("#master-clock-minutes")
@@ -30,9 +30,10 @@ const qCorrect = $("#questions-correct")
 const altFacts = $("#alternative-facts")
 
 // -------------- score array ------------
+//var calculatedScore= "" 
 var recordScores = {
-    name:[],
-    score:[]
+    "name":[],
+    "score":[]
 };
 var currentQuestion = 0;
 
@@ -65,6 +66,18 @@ var questionArr = [
     }
 ];
 
+for (let i = 0; i < localStorage.length; i++) {
+    // we are not changing what the constant variables do here, we are adding to their value
+               
+    var key = localStorage.key(i);
+    var value = localStorage.getItem(key);
+    console.log("loaded key", key);
+    console.log("loaded value", value);
+   
+    document.getElementById("high-scores").innerHTML += `${key}: ${value}<br />`;
+     
+};
+
 // GIVEN I am taking a code quiz
 // WHEN I click the start button ,THEN a timer starts and I am presented with a question
 
@@ -86,7 +99,7 @@ function startDelayClock(){
     
         questionBox.text("Begin quiz in "  + secondsLeft);
         secondsLeft--;
-        console.log("does startDelayClock work:" , secondsLeft)
+        //console.log("does startDelayClock work:" , secondsLeft)
         if(secondsLeft === 0 ) {
             clearInterval(timerInterval);
             questionBox.empty()
@@ -108,7 +121,7 @@ function startMasterClock(){
     
         seconds.text(totalSeconds); 
         totalSeconds--;
-        console.log("does master clock work:" , totalSeconds)
+        //console.log("does master clock work:" , totalSeconds)
         
         if(totalSeconds === 0 || (currentQuestion === questionArr.length)) {
             clearInterval(quizInterval);
@@ -139,7 +152,7 @@ function startQuiz() {
     var answersIndex = questionArr[currentQuestion].answers.length;
     // these are the answers the user can select - generated with the for loop
     var answers;
-    $(qRemain).text(questionArr.length - currentQuestion)
+    $(qRemain).text(questionArr.length - currentQuestion);
     //i is a progressive index number starting at 0 and ending with the end of the list
     
     for (i = 0; i < answersIndex; i++) {
@@ -160,7 +173,7 @@ function startQuiz() {
 
             // If you didn't pick an answer, you get a message when you click next.
             value = $("input[type='radio']:checked").val();
-            console.log(typeof value)
+            //console.log(typeof value)
             if (value == undefined) {
                 $(quizMessage).text("You didn't pick anything!!");
                 $(quizMessage).show();
@@ -210,8 +223,7 @@ function startQuiz() {
             $(nextButton).text("Next Question");
             resetQuiz();
             startQuiz();
-            hideScore();
-            startButton.show()
+            startButton.show();
         };
 
     });
@@ -220,103 +232,67 @@ function startQuiz() {
         currentQuestion = 0;
         correctAnswers = 0;
         alternateFacts = 0;
+        totalSeconds= 60;
+        secondsLeft= 5;
     
     };
 
     // takes 5 seconds off the clock when you answer with alternativeFacts
     function penaltyFunction(){ 
-        totalSeconds -= 5
-    }
+        totalSeconds -= 5;
+    };
    
 
     function displayScore() {
-        var scoreTime = (60 - $(seconds).text())
-        var calculatedScore = Math.floor((correctAnswers / scoreTime) * 10000)
-        questionBox.empty()
-        choiceList.empty()
-        questionBox.text("You correctly answered: " + correctAnswers + " out of: " + questionArr.length + " questions, and scored " + calculatedScore + " points! ");
-        highscore()
-    };
-
-    function highScore(){
-        questionBox.empty()
-        choiceList.empty()
+        var scoreTime = (60 - $(seconds).text());
+        var calculatedScore = Math.floor((correctAnswers / scoreTime) * 10000);
+        questionBox.empty();
+        choiceList.empty();
         questionBox.text("You correctly answered: " + correctAnswers + " out of: " + questionArr.length + " questions, and scored " + calculatedScore + " points! ");
         
-        $('<li><input type="submit text" ></li>').appendTo(choiceList);
-
-    }
-    // function hideScore() {
-    //     $(document).find(".result").hide();
-    // };     
-    
-    
-// WHEN all questions are answered or the timer reaches, THEN the game is over
-    // create an if, (clock.value = 0), if(quiz.length = 10) then launch score menu
-
-   
-
-// WHEN the game is over, THEN I can save my initials and score
-    //in question box create an input field that records user initials and score 
-    /*
-// ------------ previous code from other project ---------
-    <h1>hi and stuff</h1>
-    <fieldset>
-        <legend>Insert data</legend>
-        <input id="inpKey" type="text" placeholder="enter key...">
-        <input id="inpValue" type="text" placeholder="enter value...">
-        <button type="button" id="btnInsert">Insert Data</button>
-    </fieldset>
-    <fieldset>
-        <legend>Local storage</legend>
-        <div id="lsOutput"></div>
-    </fieldset>
-// -------- script starts here ----------
-    <script type="text/javascript">
-        // localStorage.setItem("age", "38")
-        // localStorage.setItem("name", "Dan")
-
-        console.log(localStorage)
-
-        //dom elements/ simplify code by making variables
-        const inpKey = document.getElementById("inpKey")
-        const inpValue = document.getElementById("inpValue")
-        const btnInsert = document.getElementById("btnInsert")
-        const lsOutput = document.getElementById("lsOutput")
+        // Display and save score
+        var fieldsetEl = $(`<fieldset class="ff7" id="high-scores-field"></fieldset>`);
+        var legendEl = $(`<legend>"Record Your Score!!"</legend>`);
+        var inputInitialsEl = $(`<input id="inpKey" type="text" placeholder="Name"></input>`);
+        var buttonEl = $(`<button type="button" id="btnInsert">Save</button>`);
+        var playerScore = $(`<p> `+ calculatedScore +` </p>`);
+        
+        $("#variable-box").prepend(fieldsetEl);
+        $(fieldsetEl).append(legendEl, inputInitialsEl, buttonEl, playerScore);
 
         // make the button work - when pushed, store the user data from the input fields
-        btnInsert.onclick = function () {
+        $("#btnInsert").on("click",  function (save) {
+            save.preventDefault()
             //simplpify code, make variables for the input field's values (what the user typed)
-            const key = inpKey.value;
-            const value = inpValue.value;
+            var key = $("#inpKey").val();
+            console.log("initials key on button push:" , key );
+            var value = calculatedScore;
+            console.log("score value on push:" , value );
 
-            //check your work with a console.log meaning check the variables you just made
-            console.log("value for key:" , key)
-            console.log("value for value:" , value)
-
-            // now lets store the data
-            //  *** we want to make sure the data is good - no empty fields, we can do that with a 
-            // true statement. && meaning if these two values both return as true - then, 
-            //in localStorage, set the item (save the data) for key and value.
-            if (key && value) {
-                //set where you would like to store the data
-                localStorage.setItem(key, value)
-                //then we want the input fields to clear after the button push, so use this line of code
-                location.reload();
+            if (key === localStorage.key){
+                for (var i = 0; i< 1; i++)
+                localStorage.setItem(key + i, value);
             };
-        };
-
-        //make the data read back in the local storage data field (see it on the web page)
-        // use a for loop
-        for (let i = 0; i < localStorage.length; i++) {
-            // we are not changing what the constant variables do here, we are adding to their value
+            questionBox.empty();
+            nextButton.show();
+            fieldsetEl.remove();
             
-            const key = localStorage.key(i);
-            const value = localStorage.getItem(key);
-            // this fancy code is short hand appending. backticks and ${} mean append
-            lsOutput.innerHTML += `${key}: ${value}<br />`;
-        };*/ 
+            
+            
+        });
+            
+    };  
+               
+            
+
+       
+            
 
 
+
+
+
+
+    
         //<----- sources ------->
         // https://uwseafsfft082-37y7395.slack.com/files/U018Z276WQG/F01B0RV2VSQ/localstorage_example
